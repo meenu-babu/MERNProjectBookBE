@@ -1,14 +1,19 @@
 import validator from "validator"
-import userModel from "../models/userModel"
+import userModel from "../models/userModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 
 
-// controller function to handle user login
-const handleUserLogin=async(req,res)=>{
-
+// function for creating token
+const createToken=(id)=>{
+   return jwt.sign({id},process.env.JWT_SECRET)
 }
+
+// // controller function to handle user login
+// const handleUserLogin=async(req,res)=>{
+
+// }
 
 
 // controller function to handle user register
@@ -28,15 +33,25 @@ return res.json({success:false,message:"Please enter valid email address"})
    }
 
    const salt=await bcrypt.genSalt(10)
+   const hashedPassword=await bcrypt.hash(password,salt)
+
+   // creating a new user using hashed password
+   const newUser=new userModel({
+      name,email,password:hashedPassword
+   })
+   const user=await newUser.save()
+   const token=createToken(user._id)
+   res.json({success:true,token})
 } catch (error) {
-    
+   console.log(error)
+   res.json({success:false,message:error.message}) 
 }
 
 }
 
-// controller function to handle admin login
-const handleAdminLogin=async(req,res)=>{
+// // controller function to handle admin login
+// const handleAdminLogin=async(req,res)=>{
 
-}
+// }
 
-export {handleUserLogin,handleUserRegister,handleAdminLogin}
+export {handleUserRegister}
