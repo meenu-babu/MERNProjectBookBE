@@ -1,11 +1,11 @@
 import express from "express"
-import { handleUserRegister} from "../controllers/userController.js"
+import { handleUserRegister, handleUserLogin,handleAdminLogin } from "../controllers/userController.js"
 
 
-const userRouter=express.Router()
+const userRouter = express.Router()
 
-userRouter.post('/register',handleUserRegister)
-// userRouter.post('/login',handleUserLogin)
-// userRouter.post('/admin',handleAdminLogin)
+userRouter.post('/register', handleUserRegister)
+userRouter.post('/login', handleUserLogin)
+userRouter.post('/admin',handleAdminLogin)
 
 export default userRouter

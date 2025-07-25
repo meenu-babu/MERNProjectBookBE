@@ -4,10 +4,11 @@ import "dotenv/config"
 import connectDB from "./DB/connection.js";
 import connectCloudinary from "./DB/cloudinary.js";
 import userRouter from "./routes/userRoute.js"
+import productRouter from "./routes/productRoute.js";
 
 
-const app=express()
-const PORT=5000
+const app = express()
+const PORT = 5000
 
 // middlewares
 app.use(express.json())
@@ -16,13 +17,14 @@ connectDB()
 connectCloudinary()
 
 // API endpoints
-app.use('/api/user',userRouter)
+app.use('/user', userRouter)
+app.use('/product',productRouter)
 
 // API endpoints
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send("Bookkart server is running and waiting for request")
 })
 
-app.listen(PORT,()=>{
-    console.log("Server is running on PORT:",PORT)
+app.listen(PORT, () => {
+    console.log("Server is running on PORT:", PORT)
 })
