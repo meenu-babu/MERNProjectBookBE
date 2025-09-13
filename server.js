@@ -5,6 +5,8 @@ import connectDB from "./DB/connection.js";
 import connectCloudinary from "./DB/cloudinary.js";
 import userRouter from "./routes/userRoute.js"
 import productRouter from "./routes/productRoute.js";
+import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 
 
 const app = express()
@@ -19,6 +21,8 @@ connectCloudinary()
 // API endpoints
 app.use('/user', userRouter)
 app.use('/product',productRouter)
+app.use('/cart',cartRouter)
+app.use('/order',orderRouter)
 
 // API endpoints
 app.get('/', (req, res) => {
